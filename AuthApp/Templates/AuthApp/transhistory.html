@@ -1,0 +1,26 @@
+{% extends 'AuthApp/base.html' %}
+{% block content %}
+{% if customer %}
+<ul>
+    <h3>Customer Info:</h3>
+    <li> {{ customer.first_name }}
+        {{ customer.last_name }}
+    </li>
+    <li>Main Balance: {{ customer.main_balance |floatformat:2 }}</li>
+    <li>Emergency Balance: {{ customer.emergency_balance |floatformat:2 }}</li>
+    <hr/>
+    {% for trans in transactions %}
+    <ul>
+        <li>Date: {{trans.transaction_date}}</li>
+        <ul>
+            <li>Account: {{trans.transaction_acct}}</li>
+            <li>Type: {{trans.transaction_type}}</li>
+            <li>Amount: {{ trans.transaction_amt|floatformat:2 }}</li>
+        </ul>
+    </ul>
+    {% endfor %}
+</ul>
+{% else %}
+<h2>I have no Customer to display!</h2>
+{% endif %}
+{% endblock %}

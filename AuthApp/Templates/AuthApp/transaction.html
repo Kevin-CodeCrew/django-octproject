@@ -1,0 +1,29 @@
+{% extends 'AuthApp/base.html' %}
+{% block content %}
+{% if customer %}
+
+<h1>Make a Deposit:</h1>
+<ul>
+    <h3>Customer Info:</h3>
+    <li> {{ customer.first_name }}
+        {{ customer.last_name }}
+    </li>
+    <li>Main Balance: {{ customer.main_balance |floatformat:2 }}</li>
+    <li>Emergency Balance: {{ customer.emergency_balance |floatformat:2 }}</li>
+    <hr/>
+
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <input type="radio" name="trans_acct" value="SAVINGS" checked>Expenses<br/>
+    <input type="radio" name="trans_acct" value="EMERGENCY">Emergency<br/>
+    <input type="radio" name="trans_type" value="DEPOSIT" checked>Deposit<br/>
+    <input type="radio" name="trans_type" value="WITHDRAW">Withdraw<br/>
+    <label for="trans_value">Amount</label>
+    <input type="number" id="trans_value" name="trans_value">
+    <button type="submit">GO GET IT!</button>
+</form>
+{% else %}
+<h2>I have no Customer to make a deposit!</h2>
+{% endif %}
+{% endblock %}
